@@ -1,0 +1,126 @@
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+]
+build-backend = 'setuptools.build_meta'
+
+
+[project]
+name = "ddnss-forwarder"
+version = "0.0.1"
+authors = [{name = "Clemens Rabe", email = "clemens.rabe@gmail.com"}]
+description = "Forwarder of DynDNS update requests with IPv6 IP interpolation."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+    "flask",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipython",
+
+    "black",
+
+    "flake8",
+    "flake8-black",
+    "flake8-bugbear",
+    "flake8-comprehensions",
+    "flake8-isort",
+    "flake8-pyproject",
+    "pep8-naming",
+
+    "isort",
+
+    "mypy",
+    "types-mock",
+
+    "pycodestyle",
+
+    "pylint",
+
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinx-pyproject",
+
+    "pyinstaller",
+
+    "types-requests",
+]
+test = [
+    "coverage[toml]",
+    "mock",
+    "pytest",
+    "pytest-cov",
+    "pytest-timeout"
+]
+
+
+[tool.black]
+line-length = 120
+
+
+[tool.isort]
+profile = "black"
+line_length = 120
+src_paths = ["src", "test"]
+
+
+[tool.flake8]
+max-line-length = 120
+
+
+[tool.pylint.main]
+py-version = "3.8"
+# extension-pkg-allow-list = "netifaces"
+
+[tool.pylint.format]
+max-line-length = 120
+
+
+[tool.mypy]
+show_error_codes = true
+
+# [[tool.mypy.overrides]]
+# module = [
+#     "netifaces.*",
+# ]
+# ignore_missing_imports = true
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+pythonpath = ["src"]
+
+
+[tool.coverage.paths]
+source = ["src"]
+
+[tool.coverage.run]
+source = [
+    "app_mod",
+    "test",
+]
+data_file = ".coverage"
+branch = true
+parallel = true
+relative_files = true
+disable_warnings = ["no-data-collected"]
+
+[tool.coverage.report]
+show_missing = true
+precision = 2
+fail_under = 20
+
+[tool.coverage.html]
+directory = "doc/unittests-coverage"
+
+[tool.coverage.xml]
+output = "doc/unittests-coverage/coverage.xml"
+
+
+[tool.sphinx-pyproject]
+copyright = "2024, Clemens Rabe <clemens.rabe@gmail.com>"
+release_url = "https://git.ra.ddnss.org/server/ddnss-forwarder/-/releases"

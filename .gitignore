@@ -1,0 +1,7 @@
+*~
+*.bak
+
+.dockerstamps/
+build/
+*.egg-info/
+__pycache__/

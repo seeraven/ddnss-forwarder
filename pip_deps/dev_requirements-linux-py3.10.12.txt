@@ -2,21 +2,21 @@ alabaster==0.7.16
     # via sphinx
 altgraph==0.17.4
     # via pyinstaller
-astroid==3.1.0
+astroid==3.2.4
     # via pylint
 asttokens==2.4.1
     # via stack-data
 attrs==23.2.0
     # via flake8-bugbear
-babel==2.14.0
+babel==2.15.0
     # via sphinx
-black==24.4.0
+black==24.4.2
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   flake8-black
-blinker==1.7.0
+blinker==1.8.2
     # via flask
-certifi==2024.2.2
+certifi==2024.7.4
     # via requests
 charset-normalizer==3.3.2
     # via requests
@@ -24,7 +24,7 @@ click==8.1.7
     # via
     #   black
     #   flask
-coverage[toml]==7.4.4
+coverage[toml]==7.6.0
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   pytest-cov
@@ -38,17 +38,17 @@ docutils==0.20.1
     #   sphinx-rtd-theme
 dom-toml==2.0.0
     # via sphinx-pyproject
-domdf-python-tools==3.8.0.post2
+domdf-python-tools==3.9.0
     # via
     #   dom-toml
     #   sphinx-pyproject
-exceptiongroup==1.2.1
+exceptiongroup==1.2.2
     # via
     #   ipython
     #   pytest
 executing==2.0.1
     # via stack-data
-flake8==7.0.0
+flake8==7.1.0
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   flake8-black
@@ -59,9 +59,9 @@ flake8==7.0.0
     #   pep8-naming
 flake8-black==0.3.6
     # via ddnss-forwarder (pyproject.toml)
-flake8-bugbear==24.2.6
+flake8-bugbear==24.4.26
     # via ddnss-forwarder (pyproject.toml)
-flake8-comprehensions==3.14.0
+flake8-comprehensions==3.15.0
     # via ddnss-forwarder (pyproject.toml)
 flake8-isort==6.1.1
     # via ddnss-forwarder (pyproject.toml)
@@ -75,7 +75,7 @@ imagesize==1.4.1
     # via sphinx
 iniconfig==2.0.0
     # via pytest
-ipython==8.23.0
+ipython==8.26.0
     # via ddnss-forwarder (pyproject.toml)
 isort==5.13.2
     # via
@@ -86,7 +86,7 @@ itsdangerous==2.2.0
     # via flask
 jedi==0.19.1
     # via ipython
-jinja2==3.1.3
+jinja2==3.1.4
     # via
     #   flask
     #   sphinx
@@ -102,7 +102,7 @@ mccabe==0.7.0
     #   pylint
 mock==5.1.0
     # via ddnss-forwarder (pyproject.toml)
-mypy==1.9.0
+mypy==1.11.1
     # via ddnss-forwarder (pyproject.toml)
 mypy-extensions==1.0.0
     # via
@@ -110,7 +110,7 @@ mypy-extensions==1.0.0
     #   mypy
 natsort==8.4.0
     # via domdf-python-tools
-packaging==24.0
+packaging==24.1
     # via
     #   black
     #   pyinstaller
@@ -121,39 +121,39 @@ parso==0.8.4
     # via jedi
 pathspec==0.12.1
     # via black
-pep8-naming==0.13.3
+pep8-naming==0.14.1
     # via ddnss-forwarder (pyproject.toml)
 pexpect==4.9.0
     # via ipython
-platformdirs==4.2.0
+platformdirs==4.2.2
     # via
     #   black
     #   pylint
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
-prompt-toolkit==3.0.43
+prompt-toolkit==3.0.47
     # via ipython
 ptyprocess==0.7.0
     # via pexpect
-pure-eval==0.2.2
+pure-eval==0.2.3
     # via stack-data
-pycodestyle==2.11.1
+pycodestyle==2.12.0
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   flake8
 pyflakes==3.2.0
     # via flake8
-pygments==2.17.2
+pygments==2.18.0
     # via
     #   ipython
     #   sphinx
-pyinstaller==6.6.0
+pyinstaller==6.9.0
     # via ddnss-forwarder (pyproject.toml)
-pyinstaller-hooks-contrib==2024.4
+pyinstaller-hooks-contrib==2024.7
     # via pyinstaller
-pylint==3.1.0
+pylint==3.2.6
     # via ddnss-forwarder (pyproject.toml)
-pytest==8.1.1
+pytest==8.3.2
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   pytest-cov
@@ -162,7 +162,7 @@ pytest-cov==5.0.0
     # via ddnss-forwarder (pyproject.toml)
 pytest-timeout==2.3.1
     # via ddnss-forwarder (pyproject.toml)
-requests==2.31.0
+requests==2.32.3
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   sphinx
@@ -170,7 +170,7 @@ six==1.16.0
     # via asttokens
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==7.3.7
+sphinx==7.4.7
     # via
     #   ddnss-forwarder (pyproject.toml)
     #   sphinx-rtd-theme
@@ -179,19 +179,19 @@ sphinx-pyproject==0.3.0
     # via ddnss-forwarder (pyproject.toml)
 sphinx-rtd-theme==2.0.0
     # via ddnss-forwarder (pyproject.toml)
-sphinxcontrib-applehelp==1.0.8
+sphinxcontrib-applehelp==2.0.0
     # via sphinx
-sphinxcontrib-devhelp==1.0.6
+sphinxcontrib-devhelp==2.0.0
     # via sphinx
-sphinxcontrib-htmlhelp==2.0.5
+sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
 sphinxcontrib-jquery==4.1
     # via sphinx-rtd-theme
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
-sphinxcontrib-qthelp==1.0.7
+sphinxcontrib-qthelp==2.0.0
     # via sphinx
-sphinxcontrib-serializinghtml==1.1.10
+sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
 stack-data==0.6.3
     # via ipython
@@ -206,30 +206,30 @@ tomli==2.0.1
     #   pylint
     #   pytest
     #   sphinx
-tomlkit==0.12.4
+tomlkit==0.13.0
     # via pylint
 traitlets==5.14.3
     # via
     #   ipython
     #   matplotlib-inline
-types-mock==5.1.0.20240311
+types-mock==5.1.0.20240425
     # via ddnss-forwarder (pyproject.toml)
-types-requests==2.31.0.20240406
+types-requests==2.32.0.20240712
     # via ddnss-forwarder (pyproject.toml)
-typing-extensions==4.11.0
+typing-extensions==4.12.2
     # via
     #   astroid
     #   black
     #   domdf-python-tools
     #   ipython
     #   mypy
-urllib3==2.2.1
+urllib3==2.2.2
     # via
     #   requests
     #   types-requests
 wcwidth==0.2.13
     # via prompt-toolkit
-werkzeug==3.0.2
+werkzeug==3.0.3
     # via flask
 
 # The following packages are considered to be unsafe in a requirements file:

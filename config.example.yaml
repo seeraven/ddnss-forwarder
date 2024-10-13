@@ -1,0 +1,14 @@
+my.ddnss.org:                                   # The URL to monitor
+  check_interval: 3600                          # The check interval in seconds
+  fritzbox: 192.168.1.1                         # The IP of the Fritz!Box
+  ip6_suffix: dead:beef:1234:5678               # The last 64-bit of the servers IPv6 address
+  update_key: secretkey                         # The key for authorization
+
+  # The URL pattern used for the update with the following patterns:
+  #   - "{key}" is the value of the update_key
+  #   - "{host}" is the host name derived from this configuration item
+  #   - "{ip4}" is the IPv4
+  #   - "{ip6}" is the IPv6 address constructed from the IPv6 prefix and
+  #     configured suffix.
+  update_url:
+    "https://www.ddnss.de/upd.php?key={key}&host={host}&ip={ip4}&ip6={ip6}"

@@ -16,6 +16,8 @@ requires-python = ">=3.8"
 dependencies = [
     "requests",
     "flask",
+    "pyyaml",
+    "dnspython",
 ]
 
 [project.optional-dependencies]
@@ -48,6 +50,7 @@ dev = [
     "pyinstaller",
 
     "types-requests",
+    "types-pyyaml",
 ]
 test = [
     "coverage[toml]",

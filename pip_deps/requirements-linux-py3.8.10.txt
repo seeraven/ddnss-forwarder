@@ -6,6 +6,8 @@ charset-normalizer==3.4.0
     # via requests
 click==8.1.7
     # via flask
+dnspython==2.6.1
+    # via ddnss-forwarder (pyproject.toml)
 flask==3.0.3
     # via ddnss-forwarder (pyproject.toml)
 idna==3.10
@@ -20,6 +22,8 @@ markupsafe==2.1.5
     # via
     #   jinja2
     #   werkzeug
+pyyaml==6.0.2
+    # via ddnss-forwarder (pyproject.toml)
 requests==2.32.3
     # via ddnss-forwarder (pyproject.toml)
 urllib3==2.2.3

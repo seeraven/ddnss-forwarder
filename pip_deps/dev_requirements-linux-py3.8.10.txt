@@ -34,6 +34,8 @@ decorator==5.1.1
     # via ipython
 dill==0.3.9
     # via pylint
+dnspython==2.6.1
+    # via ddnss-forwarder (pyproject.toml)
 docutils==0.20.1
     # via
     #   sphinx
@@ -175,6 +177,8 @@ pytest-timeout==2.3.1
     # via ddnss-forwarder (pyproject.toml)
 pytz==2024.2
     # via babel
+pyyaml==6.0.2
+    # via ddnss-forwarder (pyproject.toml)
 requests==2.32.3
     # via
     #   ddnss-forwarder (pyproject.toml)

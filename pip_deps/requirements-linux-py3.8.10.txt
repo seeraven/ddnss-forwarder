@@ -1,16 +1,16 @@
 blinker==1.8.2
     # via flask
-certifi==2024.7.4
+certifi==2024.8.30
     # via requests
-charset-normalizer==3.3.2
+charset-normalizer==3.4.0
     # via requests
 click==8.1.7
     # via flask
 flask==3.0.3
     # via ddnss-forwarder (pyproject.toml)
-idna==3.7
+idna==3.10
     # via requests
-importlib-metadata==8.2.0
+importlib-metadata==8.5.0
     # via flask
 itsdangerous==2.2.0
     # via flask
@@ -22,9 +22,9 @@ markupsafe==2.1.5
     #   werkzeug
 requests==2.32.3
     # via ddnss-forwarder (pyproject.toml)
-urllib3==2.2.2
+urllib3==2.2.3
     # via requests
-werkzeug==3.0.3
+werkzeug==3.0.4
     # via flask
-zipp==3.19.2
+zipp==3.20.2
     # via importlib-metadata

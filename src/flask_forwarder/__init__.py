@@ -64,7 +64,15 @@ def create_app() -> Flask:
         if not ip6suffix:
             return "argument 'ip6' not provided", 400
 
-        ip6 = ip6prefix[: ip6prefix.index("::")] + ":" + ip6suffix
+        # Examples for ip6prefix:
+        #   2001:9e8:8963:b000::/64
+        #   2001:9e8:896f::/64
+        ip_elements = ip6prefix[: ip6prefix.index("::")].split(":")
+        while len(ip_elements) < 4:
+            ip_elements.append("0")
+        ip_elements += ip6suffix.split(":")
+
+        ip6 = ":".join(ip_elements)
         tgt_url = f"https://www.ddnss.de/upd.php?key={key}&host={host}&ip={ip}&ip6={ip6}"
 
         LOGGER.debug("Forwarding request to %s.", tgt_url)

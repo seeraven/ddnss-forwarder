@@ -1,2 +1,1 @@
-"""Monitoring of DNS addresses.
-"""
+"""Monitoring of DNS addresses."""

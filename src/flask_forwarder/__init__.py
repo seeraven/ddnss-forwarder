@@ -1,5 +1,4 @@
-"""Flask application put into a module.
-"""
+"""Flask application put into a module."""
 
 # ----------------------------------------------------------------------------
 # Module Import
@@ -71,14 +70,37 @@ def create_app() -> Flask:
         while len(ip_elements) < 4:
             ip_elements.append("0")
         ip_elements += ip6suffix.split(":")
-
         ip6 = ":".join(ip_elements)
-        tgt_url = f"https://www.ddnss.de/upd.php?key={key}&host={host}&ip={ip}&ip6={ip6}"
 
+        updated = []
+        not_updated = []
+        tgt_url = f"https://www.ddnss.de/upd.php?key={key}&host={host}&ip={ip}&ip6={ip6}"
         LOGGER.debug("Forwarding request to %s.", tgt_url)
-        r = requests.get(tgt_url, timeout=30)
-        LOGGER.debug("Status code: %d", r.status_code)
-        LOGGER.debug("Content:     %s", r.content)
-        return r.content, r.status_code, r.headers.items()
+        try:
+            r = requests.get(tgt_url, timeout=30)
+            LOGGER.debug("Status code: %d", r.status_code)
+            LOGGER.debug("Content:     %s", r.content)
+            updated.append("ddnss")
+        # pylint: disable=bare-except
+        except:  # noqa
+            LOGGER.exception("Unable to update DNS entries on ddnss.de.")
+            not_updated.append("ddnss")
+
+        ipv64_key = "rBhszjJ2WOAi0eocYMkfdxP36gXvSK9a"
+        tgt_url = f"https://ipv64.net/nic/update?key={ipv64_key}&domain=raven.ipv64.de&ip={ip}&ip6={ip6}"
+        LOGGER.debug("Forwarding request to %s.", tgt_url)
+        try:
+            r = requests.get(tgt_url, timeout=30)
+            LOGGER.debug("Status code: %d", r.status_code)
+            LOGGER.debug("Content:     %s", r.content)
+            updated.append("ipv64")
+        # pylint: disable=bare-except
+        except:  # noqa
+            LOGGER.exception("Unable to update DNS entries on ipv64.net.")
+            not_updated.append("ipv64")
+
+        if not_updated:
+            return f"Error updating services {not_updated}.", 200
+        return f"Updated the services {updated}.", 200
 
     return app

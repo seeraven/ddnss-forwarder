@@ -24,7 +24,7 @@ def get_ipv4(domain: str) -> Optional[str]:
         LOGGER.error("Error while retrieving address for %s: %s", domain, e)
         return None
     if results:
-        return results[0][4][0]
+        return results[0][4][0]  # type: ignore
     LOGGER.error("Can't get IPv4 address for %s!", domain)
     return None
 
@@ -37,6 +37,6 @@ def get_ipv6(domain: str) -> Optional[str]:
         LOGGER.error("Error while retrieving address for %s: %s", domain, e)
         return None
     if results:
-        return results[0][4][0]
+        return results[0][4][0]  # type: ignore
     LOGGER.error("Can't get IPv6 address for %s!", domain)
     return None

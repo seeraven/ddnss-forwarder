@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------
 # Makefile for ddnss-forwarder
 #
-# Copyright (c) 2024 by Clemens Rabe <clemens.rabe@gmail.com>
+# Copyright (c) 2025 by Clemens Rabe <clemens.rabe@gmail.com>
 # All rights reserved.
 # ----------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ ALL_TARGET             := check-style.venv
 SCRIPT                 := src/ddnss_forwarder.py
 
 MAKE4PY_DOCKER_IMAGE   := make4py-ddnss-forwarder
-UBUNTU_DIST_VERSIONS   := 20.04 22.04
+UBUNTU_DIST_VERSIONS   := 22.04 24.04
 ENABLE_WINDOWS_SUPPORT := 0
 
 

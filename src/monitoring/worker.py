@@ -48,10 +48,17 @@ class MonitorWorker(Thread):
                 current_ipv6_prefix = get_current_ipv6_prefix(self.fritzbox)
                 dns_ipv4 = get_ipv4(self.host)
                 dns_ipv6 = get_ipv6(self.host)
-                if (current_ipv4 is None) or (current_ipv6_prefix is None) or (dns_ipv4 is None) or (dns_ipv6 is None):
+                if (current_ipv4 is None) or (current_ipv6_prefix is None):
                     LOGGER.error(
-                        "Can't retrieve all current IP addresses from Fritz!Box for verification. "
+                        "Can't retrieve the current IP addresses from Fritz!Box for the verification. "
                         "Retrying in 30 seconds."
+                    )
+                    time.sleep(30)
+
+                if (dns_ipv4 is None) or (dns_ipv6 is None):
+                    LOGGER.error(
+                        "Can't determine the IPs of the domain %s for the verification. Retrying in 30 seconds.",
+                        self.host,
                     )
                     time.sleep(30)
 
@@ -93,6 +100,9 @@ class MonitorWorker(Thread):
 def construct_workers(config: Dict[str, Dict[str, Any]]) -> None:
     """Construct and start all worker threads."""
     for domain in config:
+        if int(config[domain]["check_interval"]) == 0:
+            LOGGER.debug("Not creating monitoring thread for domain %s since check_interval is set to 0.", domain)
+            continue
         worker_thread = MonitorWorker(domain, config[domain])
         LOGGER.info("Starting monitoring thread for domain %s.", domain)
         worker_thread.start()

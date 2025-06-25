@@ -4,6 +4,7 @@
 # Module Import
 # ----------------------------------------------------------------------------
 import logging
+from typing import Any, Dict
 
 import requests
 from flask import Flask, request
@@ -17,8 +18,6 @@ _HELP_PAGE = """
 <p>Please use the <a href="/forward">/forward</a> URL with the following
 parameters:
 <ul>
-  <li><b>key:</b> the key of https://www.ddnss.de/upd.php for authorization</li>
-  <li><b>host:</b> the host to update</li>
   <li><b>ip:</b> the current IPv4 address</li>
   <li><b>ip6prefix:</b> the current IPv6 prefix as a netmask</li>
   <li><b>ip6:</b> the IPv6 suffix to construct the official address</li>
@@ -30,7 +29,31 @@ parameters:
 # ----------------------------------------------------------------------------
 # Exported Functions
 # ----------------------------------------------------------------------------
-def create_app() -> Flask:
+# pylint: disable=duplicate-code
+def combine_ipv6_address(ipv6_prefix: str, ipv6_suffix: str) -> str:
+    """Combine the IPv6 prefix and suffix into a full IPv6 address."""
+    elements = []
+    # Add elements from prefix (4 elements at max)
+    for item in ipv6_prefix.split(":"):
+        if item == "":
+            item = "0"
+        elements.append(item)
+
+        if len(elements) == 4:
+            break
+
+    # Ensure we have 4 elements
+    while len(elements) < 4:
+        elements.append("0")
+
+    # Add elements from the suffix
+    elements += ipv6_suffix.split(":")
+
+    # Combine everything into on IPv6 string
+    return ":".join(elements)
+
+
+def create_app(config: Dict[str, Dict[str, Any]]) -> Flask:
     """Create the flask application."""
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile("config.py", silent=True)
@@ -41,14 +64,6 @@ def create_app() -> Flask:
 
     @app.route("/forward")
     def forward():  # pylint: disable=too-many-return-statements
-        key = request.args.get("key", "")
-        if not key:
-            return "argument 'key' not provided", 400
-
-        host = request.args.get("host", "")
-        if not host:
-            return "argument 'host' not provided", 400
-
         ip = request.args.get("ip", "")
         if not ip:
             return "argument 'ip' not provided", 400
@@ -63,44 +78,33 @@ def create_app() -> Flask:
         if not ip6suffix:
             return "argument 'ip6' not provided", 400
 
-        # Examples for ip6prefix:
-        #   2001:9e8:8963:b000::/64
-        #   2001:9e8:896f::/64
-        ip_elements = ip6prefix[: ip6prefix.index("::")].split(":")
-        while len(ip_elements) < 4:
-            ip_elements.append("0")
-        ip_elements += ip6suffix.split(":")
-        ip6 = ":".join(ip_elements)
-
         updated = []
         not_updated = []
-        tgt_url = f"https://www.ddnss.de/upd.php?key={key}&host={host}&ip={ip}&ip6={ip6}"
-        LOGGER.debug("Forwarding request to %s.", tgt_url)
-        try:
-            r = requests.get(tgt_url, timeout=30)
-            LOGGER.debug("Status code: %d", r.status_code)
-            LOGGER.debug("Content:     %s", r.content)
-            updated.append("ddnss")
-        # pylint: disable=bare-except
-        except:  # noqa
-            LOGGER.exception("Unable to update DNS entries on ddnss.de.")
-            not_updated.append("ddnss")
-
-        ipv64_key = "rBhszjJ2WOAi0eocYMkfdxP36gXvSK9a"
-        tgt_url = f"https://ipv64.net/nic/update?key={ipv64_key}&domain=raven.ipv64.de&ip={ip}&ip6={ip6}"
-        LOGGER.debug("Forwarding request to %s.", tgt_url)
-        try:
-            r = requests.get(tgt_url, timeout=30)
-            LOGGER.debug("Status code: %d", r.status_code)
-            LOGGER.debug("Content:     %s", r.content)
-            updated.append("ipv64")
-        # pylint: disable=bare-except
-        except:  # noqa
-            LOGGER.exception("Unable to update DNS entries on ipv64.net.")
-            not_updated.append("ipv64")
+        for domain in config:
+            domain_config = config[domain]
+            ip6 = combine_ipv6_address(ip6prefix, domain_config["ip6_suffix"])
+            update_url = domain_config["update_url"].replace("{key}", domain_config["update_key"])
+            update_url = update_url.replace("{host}", domain)
+            update_url = update_url.replace("{ip4}", ip)
+            update_url = update_url.replace("{ip6}", ip6)
+            LOGGER.debug("Requesting update of %s by calling %s.", domain, update_url)
+            try:
+                response = requests.get(update_url, timeout=30.0)
+                LOGGER.debug(
+                    "DNS record of domain %s updated. Update url returned status code %d.",
+                    domain,
+                    response.status_code,
+                )
+                updated.append(domain)
+            except requests.exceptions.Timeout:
+                LOGGER.error("Timeout while trying to update DNS record of domain %s!", domain)
+                not_updated.append(domain)
+            except requests.exceptions.RequestException as e:
+                LOGGER.error("Exception while trying to update DNS record of domain %s: %s", domain, e)
+                not_updated.append(domain)
 
         if not_updated:
-            return f"Error updating services {not_updated}.", 200
-        return f"Updated the services {updated}.", 200
+            return f"Error updating domains {not_updated}.", 200
+        return f"Updated the domains {updated}.", 200
 
     return app

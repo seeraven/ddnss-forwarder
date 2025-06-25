@@ -40,9 +40,12 @@ build the docker image:
     $ git submodule update --init
     $ make build-docker
 
+Then we need to generate the configuration file `config.yaml`. Use the
+`config.example.yaml` as a starting point.
+
 Then we start the docker container on the server using a port of your choice:
 
-    $ docker run -d --restart=always -p 1234:8080 ddnss-forwarder:0.0.1
+    $ docker run -d --restart=always -p 1234:8080 -v /your/config.yaml:/config.yaml:ro ddnss-forwarder:0.0.1 -c /config.yaml
 
 
 ## Configuration of the Fritz!Box
@@ -50,22 +53,12 @@ Then we start the docker container on the server using a port of your choice:
 In the configuration of the [fritzbox] you now use the following target URL
 for the DynDNS update:
 
-    http://<SERVER IP>:<PORT>/forward?key=<DDNSS KEY>&host=<HOST>&ip=<ipaddr>&ip6prefix=<ip6lanprefix>&ip6=<IPv6 SUFFIX>
+    http://<SERVER IP>:<PORT>/forward?ip=<ipaddr>&ip6prefix=<ip6lanprefix>&ip6=<IPv6 SUFFIX>
 
-Here, you have to replace the server ip, port, ddnss key, host and the ipv6 suffix
+Here, you have to replace the server ip, port and the ipv6 suffix
 with your actual values. An example of the URL looks like
 
-    http://192.168.100.2:1234/forward?key=secretkey&host=myhost.ddnss.org&&ip=<ipaddr>&ip6prefix=<ip6lanprefix>&ip6=a236:bcff:fee7:7b14
-
-
-## Configuration of active Monitoring
-
-ddnss-forwarder now supports also active monitoring of your domains. This is
-configured using a `config.yaml` file. You should copy the `config.example.yaml`
-file and adapt it to your needs. Then, you use the `-c` command line option
-of ddnss-forwarder. When you use docker, don't forget to bind mount the file:
-
-    $ docker run -d --restart=always -p 1234:8080 -v $PWD/config.yaml:/config.yaml ddnss-forwarder:0.0.1 -c /config.yaml
+    http://192.168.100.2:1234/forward?ip=<ipaddr>&ip6prefix=<ip6lanprefix>&ip6=a236:bcff:fee7:7b14
 
 
 [flask]: https://flask.palletsprojects.com/en/3.0.x/

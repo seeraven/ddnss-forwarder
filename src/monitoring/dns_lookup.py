@@ -21,7 +21,7 @@ def get_ipv4(domain: str) -> Optional[str]:
     try:
         results = socket.getaddrinfo(domain, 80, family=socket.AF_INET)
     except socket.gaierror as e:
-        LOGGER.error("Error while retrieving address for %s: %s", domain, e)
+        LOGGER.error("Error while retrieving IPv4 address for %s: %s", domain, e)
         return None
     if results:
         return results[0][4][0]  # type: ignore
@@ -34,7 +34,7 @@ def get_ipv6(domain: str) -> Optional[str]:
     try:
         results = socket.getaddrinfo(domain, 80, family=socket.AF_INET6)
     except socket.gaierror as e:
-        LOGGER.error("Error while retrieving address for %s: %s", domain, e)
+        LOGGER.error("Error while retrieving IPv6 address for %s: %s", domain, e)
         return None
     if results:
         return results[0][4][0]  # type: ignore
